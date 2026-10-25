@@ -1,0 +1,32 @@
+# ── Model ────────────────────────────────────────────────────────────────────
+model:
+  model_id: "Qwen/Qwen2.5-0.5B-Instruct"
+  hf_token: ""           # Leave empty for public models; set for private/gated models
+  torch_dtype: "auto"    # auto, float16, bfloat16, float32
+
+# ── Output ───────────────────────────────────────────────────────────────────
+output:
+  dir: "./output/Qwen2.5-0.5B-AWQ-W4A16-ASYM"
+
+# ── Quantization ─────────────────────────────────────────────────────────────
+quantization:
+  num_bits: 4            # Number of quantization bits (4 or 8)
+  group_size: 128        # Group size for grouped quantization (e.g. 64, 128)
+  n_grid: 20             # Number of grid points for AWQ scale search
+  duo_scaling: "both"    # AWQ scaling mode: "both", true (duo only), or false (activation only)
+
+# ── Calibration ──────────────────────────────────────────────────────────────
+calibration:
+  num_samples: 512       # Number of calibration samples
+  max_seq_length: 1024   # Maximum sequence length for calibration
+
+# ── Hardware ─────────────────────────────────────────────────────────────────
+hardware:
+  cache_device: "cuda"   # Device to store activations during calibration: "cuda" or "cpu"
+
+# ── HuggingFace Hub Upload (optional) ────────────────────────────────────────
+hub:
+  enabled: false         # Set to true to upload the quantized model to the Hub
+  username: ""           # Your HF username
+  repo_name: ""          # Repository name (auto-generated if empty)
+  private: false         # Whether the repo should be private
